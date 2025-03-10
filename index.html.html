@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de Servicios IA para Inmobiliarias</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 20px 0 10px;
+            color: var(--secondary);
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .slide {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            transition: var(--transition);
+            min-height: 400px;
+        }
+        
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .indicator {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #ddd;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .dot.active {
+            background-color: var(--secondary);
+            transform: scale(1.2);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .price {
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .features {
+            list-style-type: none;
+            margin: 15px 0;
+        }
+        
+        .features li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "✓";
+            color: var(--success);
+            position: absolute;
+            left: 0;
+        }
+        
+        .columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .column {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .highlight {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 30px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light);
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .calculator {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="range"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        input[type="range"] {
+            background: transparent;
+        }
+        
+        .result {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .tab.active {
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .column {
+                flex: 100%;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <header>
+            <h1>Soluciones de IA para Inmobiliarias</h1>
+            <p>Transformando el sector inmobiliario con tecnología inteligente</p>
+        </header>
+        
+        <div class="slide active" id="slide1">
+            <h2>Nuestra Propuesta de Valor</h2>
+            <p>Ofrecemos soluciones de Inteligencia Artificial diseñadas específicamente para potenciar la gestión inmobiliaria y optimizar la experiencia del cliente.</p>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="card">
+                        <h3>Proceso de Implementación</h3>
+                        <p>Un enfoque estratégico de 3 fases para garantizar el máximo valor:</p>
+                        <ul class="features">
+                            <li>Diagnóstico y relevamiento inicial</li>
+                            <li>Implementación de herramientas personalizadas</li>
+                            <li>Mantenimiento y mejora continua</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <h3>Beneficios Clave</h3>
+                        <ul class="features">
+                            <li>Automatización de procesos repetitivos</li>
+                            <li>Calificación inteligente de leads</li>
+                            <li>Asistencia 24/7 para clientes potenciales</li>
+                            <li>Análisis predictivo de propiedades</li>
+                            <li>Integración con plataformas existentes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide" id="slide2">
+            <h2>Fase 1: Diagnóstico y Relevamiento</h2>
+            <p>Comenzamos con una evaluación exhaustiva para comprender sus necesidades específicas y oportunidades de mejora.</p>
+            
+            <div class="card">
+                <h3>Análisis Completo</h3>
+                <p class="price">1.500 USD</p>
+                <p>Inversión inicial para diagnóstico y evaluación completa</p>
+                <ul class="features">
+                    <li>Evaluación de procesos actuales</li>
+                    <li>Identificación de oportunidades de automatización</li>
+                    <li>Análisis de datos existentes y sistemas en uso</li>
+                    <li>Informe de recomendaciones con ROI estimado</li>
+                    <li>Propuesta de implementación con cronograma</li>
+                </ul>
+            </div>
+            
+            <div class="calculator">
+                <h3>Calculadora de Diagnóstico</h3>
+                <div class="form-group">
+                    <label for="size">Tamaño de la inmobiliaria:</label>
+                    <select id="size">
+                        <option value="small">Pequeña (1-5 agentes)</option>
+                        <option value="medium">Mediana (6-20 agentes)</option>
+                        <option value="large">Grande (21+ agentes)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="complexity">Complejidad de operaciones:</label>
+                    <input type="range" id="complexity" min="1" max="5" value="3">
+                    <div id="complexity-value">Media</div>
+                </div>
+                <div class="result" id="diagnostic-result">
+                    Costo estimado: 2.250€
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide" id="slide3">
+            <h2>Fase 2: Implementación de Herramientas</h2>
+            <p>Desarrollo e implementación de soluciones a medida según las necesidades identificadas.</p>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="tab1">Comunicación</div>
+                <div class="tab" data-tab="tab2">Análisis</div>
+                <div class="tab" data-tab="tab3">Automatización</div>
+                <div class="tab" data-tab="tab4">Integración</div>
+            </div>
+            
+            <div class="tab-content active" id="tab1">
+                <div class="card">
+                    <h3>Chatbot IA para Atención Inicial</h3>
+                    <p class="price">4.000 - 5.500 USD</p>
+                    <ul class="features">
+                        <li>Respuesta automática a consultas 24/7</li>
+                        <li>Calificación inicial de leads</li>
+                        <li>Programación de visitas automática</li>
+                        <li>Personalización según tipo de propiedades</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Asistente IA para Agentes Inmobiliarios</h3>
+                    <p class="price">3.500 - 5.000 USD</p>
+                    <ul class="features">
+                        <li>Sugerencias inteligentes durante negociaciones</li>
+                        <li>Preparación automática de documentación</li>
+                        <li>Recordatorios personalizados de seguimiento</li>
+                        <li>Análisis de preferencias de clientes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab2">
+                <div class="card">
+                    <h3>Sistema de Calificación Automática de Leads</h3>
+                    <p class="price">2.500 USD</p>
+                    <ul class="features">
+                        <li>Carga Automática de Formularios y Bases de Datos</li>
+                        <li>Clasificación Predictiva de Clientes</li>
+                        <li>Segmentación inteligente de clientes</li>
+                        <li>Priorización de seguimiento</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Dashboard Analítico</h3>
+                    <p class="price">700 USD</p>
+                    <ul class="features">
+                        <li>Visualización en tiempo real del rendimiento</li>
+                        <li>Análisis predictivo de tendencias</li>
+                        <li>Métricas personalizadas por agente</li>
+                        <li>Informes automatizados periódicos</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab3">
+                <div class="card">
+                    <h3>Automatización de Seguimiento de Clientes</h3>
+                    <p class="price">Ver + adelante</p>
+                    <ul class="features">
+                        <li>Secuencias de correo electrónico personalizadas</li>
+                        <li>Seguimiento automatizado post-visita</li>
+                        <li>Alertas de propiedades relevantes</li>
+                        <li>Recordatorios de hitos importantes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab4">
+                <div class="card">
+                    <h3>Integración con Plataformas Inmobiliarias</h3>
+                    <p class="price">1.500 USD por plataforma</p>
+                    <ul class="features">
+                        <li>Sincronización con portales inmobiliarios</li>
+                        <li>Integración con CRM existente</li>
+                        <li>Conexión con sistemas de gestión documental</li>
+                        <li>APIs personalizadas según necesidades</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide" id="slide4">
+            <h2>Fase 3: Mantenimiento y Comisiones</h2>
+            <p>Nuestro modelo combina una tarifa mensual de mantenimiento con un sistema de comisiones basado en resultados.</p>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="card">
+                        <h3>Fee Mensual de Mantenimiento</h3>
+                        <p class="price">750 - 1.500 USD mensuales</p>
+                        <p>Escalable según volumen de uso y número de herramientas</p>
+                        <ul class="features">
+                            <li>Mantenimiento técnico continuo</li>
+                            <li>Actualizaciones de algoritmos</li>
+                            <li>Soporte técnico prioritario</li>
+                            <li>Reentrenamiento periódico de modelos</li    >
+                            <li>Informes mensuales de rendimiento</li>
+                            <li>2-4 horas de consultoría mensual</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="card">
+                        <h3>Opción: Sistema de Comisiones por Resultados</h3>
+                        <p class="price">0,3% - 0,8% del valor de venta</p>
+                        <ul class="features">
+                            <li>Aplicable solo a ventas atribuibles a la IA</li>
+                            <li>Métricas claras de atribución</li>
+                            <li>Posibilidad de establecer tope máximo</li>
+                            <li>Facturación mensual transparente</li>
+                            <li>Ajustes trimestrales según rendimiento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calculator">
+                <h3>Calculadora de ROI</h3>
+                <div class="form-group">
+                    <label for="properties">Propiedades mensuales:</label>
+                    <input type="number" id="properties" value="10">
+                </div>
+                <div class="form-group">
+                    <label for="avg-price">Precio medio (USD):</label>
+                    <input type="number" id="avg-price" value="250000">
+                </div>
+                <div class="form-group">
+                    <label for="conversion">Mejora en conversión (%):</label>
+                    <input type="range" id="conversion" min="5" max="30" value="15">
+                    <div id="conversion-value">15%</div>
+                </div>
+                <div class="result" id="roi-result">
+                    ROI estimado: 350% anual
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide" id="slide5">
+            <h2>Resumen de la Propuesta</h2>
+            <p>Nuestra solución integral de IA para su inmobiliaria incluye:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fase</th>
+                        <th>Descripción</th>
+                        <th>Inversión</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Diagnóstico</td>
+                        <td>Evaluación inicial y propuesta</td>
+                        <td>1.200 USD</td>
+                    </tr>
+                    <tr>
+                        <td>Implementación</td>
+                        <td>Desarrollo de herramientas personalizadas</td>
+                        <td>Según módulos seleccionados</td>
+                    </tr>
+                    <tr>
+                        <td>Mantenimiento</td>
+                        <td>Soporte continuo y mejoras</td>
+                        <td>500 - 1.200 USD mensuales</td>
+                    </tr>
+                    <tr>
+                        <td>Comisiones</td>
+                        <td>Pago por resultados</td>
+                        <td>0,3% - 0,8% por venta</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="card">
+                <h3>Próximos Pasos</h3>
+                <ul class="features">
+                    <li>Reunión de KickOFF (Lanzamiento) </li>
+                    <li>Presentación de diagnóstico preliminar</li>
+                    <li>Selección de módulos a implementar</li>
+                    <li>Acuerdo de términos y planificación</li>
+                    <li>Implementación por fases</li>
+                </ul>
+            </div>
+            
+            <p>¿Listo para transformar su negocio inmobiliario con IA? <span class="highlight">Contáctenos hoy mismo</span> para comenzar.</p>
+        </div>
+        
+        <div class="navigation">
+            <button class="btn" id="prev-btn" disabled>Anterior</button>
+            <button class="btn" id="next-btn">Siguiente</button>
+        </div>
+        
+        <div class="indicator" id="dots-container"></div>
+        
+        <footer>
+            <p>© 2025 Soluciones IA para Inmobiliarias</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Slide Navigation
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const dotsContainer = document.getElementById('dots-container');
+            let currentSlide = 0;
+            
+            // Create dots indicators
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+            
+            function updateSlide() {
+                slides.forEach(slide => slide.classList.remove('active'));
+                slides[currentSlide].classList.add('active');
+                
+                // Update dots
+                document.querySelectorAll('.dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+                
+                // Update buttons
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === slides.length - 1;
+                
+                // Change next button text on last slide
+                if (currentSlide === slides.length - 1) {
+                    nextBtn.textContent = 'Finalizar';
+                } else {
+                    nextBtn.textContent = 'Siguiente';
+                }
+            }
+            
+            function goToSlide(index) {
+                currentSlide = index;
+                updateSlide();
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlide();
+                }
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlide();
+                }
+            });
+            
+            // Tabs functionality
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Deactivate all tabs and contents
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Activate selected tab and content
+                    tab.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Complexity slider
+            const complexitySlider = document.getElementById('complexity');
+            const complexityValue = document.getElementById('complexity-value');
+            const complexityLabels = ['Muy baja', 'Baja', 'Media', 'Alta', 'Muy alta'];
+            
+            complexitySlider.addEventListener('input', () => {
+                const value = complexitySlider.value;
+                complexityValue.textContent = complexityLabels[value - 1];
+                updateDiagnosticResult();
+            });
+            
+            // Size selector
+            const sizeSelector = document.getElementById('size');
+            sizeSelector.addEventListener('change', updateDiagnosticResult);
+            
+            function updateDiagnosticResult() {
+                // Fixed price of 1200 USD for diagnosis
+                const diagnosticPrice = 1500;
+                
+                const complexityFactor = {
+                    '1': 0.8,
+                    '2': 0.9,
+                    '3': 1.0,
+                    '4': 1.1,
+                    '5': 1.2
+                };
+                
+                document.getElementById('diagnostic-result').textContent = 
+                    `Costo del análisis: 1.500 USD`;
+            }
+            
+            // ROI Calculator
+            const propertiesInput = document.getElementById('properties');
+            const avgPriceInput = document.getElementById('avg-price');
+            const conversionSlider = document.getElementById('conversion');
+            const conversionValue = document.getElementById('conversion-value');
+            
+            function updateROICalculator() {
+                const properties = parseInt(propertiesInput.value);
+                const avgPrice = parseInt(avgPriceInput.value);
+                const conversionImprovement = parseInt(conversionSlider.value) / 100;
+                
+                // Calculate additional sales due to improvement
+                const additionalSales = properties * conversionImprovement;
+                
+                // Calculate additional revenue (assuming 3% standard commission)
+                const additionalRevenue = additionalSales * avgPrice * 0.03;
+                
+                // Calculate cost (assuming medium package)
+                const monthlyCost = 800; // Medium monthly fee in USD
+                const implementationCost = 10000; // Average implementation in USD
+                const yearlyMaintenance = monthlyCost * 12;
+                const totalYearlyCost = yearlyMaintenance + (implementationCost / 3); // Amortize implementation over 3 years
+                
+                // Calculate ROI
+                const yearlyROI = (additionalRevenue * 12 - totalYearlyCost) / totalYearlyCost * 100;
+                
+                document.getElementById('roi-result').textContent = 
+                    `ROI estimado: ${Math.round(yearlyROI)}% anual`;
+            }
+            
+            propertiesInput.addEventListener('input', updateROICalculator);
+            avgPriceInput.addEventListener('input', updateROICalculator);
+            conversionSlider.addEventListener('input', () => {
+                conversionValue.textContent = `${conversionSlider.value}%`;
+                updateROICalculator();
+            });
+            
+            // Initialize calculators
+            updateDiagnosticResult();
+            updateROICalculator();
+        });
+    </script>
+</body>
+</html>
