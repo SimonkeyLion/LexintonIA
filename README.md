@@ -1,0 +1,2 @@
+# LexintonIA
+Lexinton IA project.
